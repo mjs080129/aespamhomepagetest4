@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>aespam - AI 스마트팜</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    background: #f9f9f9;
+    color: #222;
+  }
+  header {
+    background: #003366;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+  }
+  nav {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 14px;
+    text-align: center;
+  }
+  nav button:hover:not(.disabled),
+  nav button.active {
+    background: #005599;
+    border-radius: 5px;
+  }
+  nav button.disabled {
+    color: #999;
+    cursor: default;
+  }
+
+  .slider {
+    width: 100%;
+    height: 300px;
+    background: url('background.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px #000;
+  }
+
+  .content {
+    display: none;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 2.0;
+  }
+  .content.active {
+    display: block;
+  }
+
+  footer {
+    background: #eee;
+    text-align: center;
+    padding: 20px;
+    font-size: 16px;
+    color: #555;
+  }
+
+  /* 게시판 스타일 */
+  .board {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+  .board-box {
+    background: white;
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  .board-box h4 {
+    margin-bottom: 10px;
+  }
+  .board-box ul {
+    list-style: none;
+    padding: 0;
+    font-size: 18px;
+  }
+
+  /* 로딩 오버레이 */
+  #loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #003366;
+    font-weight: bold;
+  }
+  #loadingOverlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  @media (max-width: 768px) {
+    .slider {
+      font-size: 20px;
+      height: 200px;
+    }
+    nav {
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .board-box {
+      width: 90%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">에스팜 (aespam)</div>
+  <nav>
+    <button onclick="menuClick(event,'home')" class="active">홈</button>
+    <button onclick="menuClick(event,'company')">회사소개</button>
+    <button onclick="menuClick(event,'team')">임원소개</button>
+    <button onclick="menuClick(event,'products')">제품소개</button>
+    <button class="disabled">기술/서비스 소개</button>
+    <button class="disabled">채용안내</button>
+    <button class="disabled">고객문의</button>
+    <button class="disabled">오시는길</button>
+  </nav>
+</header>
+
+<div class="slider">
+  Bringing Nature into Your Life,<br>Technology into Nature.
+</div>
+
+<!-- 로딩 오버레이 -->
+<div id="loadingOverlay">Loading...</div>
+
+<section id="home" class="content active">
+  <h2>환영합니다</h2>
+  <p>에스팜은 AI 기반의 개인 맞춤형 스마트팜을 통해<br>
+  지속 가능한 미래 농업을 제안합니다.</p>
+  
+  <div class="board">
+    <div class="board-box">
+      <h4>공지사항</h4>
+      <ul>
+        <li>✅ 스마트팜 시제품 출시 예정 (2025.11)</li>
+        <li>📢 채용설명회 일정 안내</li>
+        <li>🔧 시스템 점검 예정 (2025.10.30)</li>
+      </ul>
+    </div>
+    <div class="board-box">
+      <h4>Q&A</h4>
+      <ul>
+        <li>Q. 어떤 작물이 가능한가요?</li>
+        <li>Q. 설치는 어떻게 하나요?</li>
+        <li>Q. 가격은 얼마인가요?</li>
+      </ul>
+    </div>
+    <div class="board-box">
+      <h4>홍보자료</h4>
+      <ul>
+        <li>📸 스마트팜 실제 설치 사례</li>
+        <li>📽️ 유튜브 영상 바로가기</li>
+        <li>📰 보도자료 모음</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="company" class="content">
+  <h2>회사소개</h2>
+  <p>에스팜(aespam)은 AI 기술을 기반으로 한 개인 맞춤형 스마트팜을 통해<br>
+  지속 가능한 미래 농업을 실현합니다.</p>
+
+  <p>2025년 10월 17일 설립, 대전광역시 유성구 대덕대로556번길 158에 위치</p>
+</section>
+
+<section id="team" class="content">
+  <h2>임원소개</h2>
+  <p>대표이사: 문준서</p>
+  <p>이사: 백기현, 신희원, 박소언</p>
+</section>
+
+<section id="products" class="content">
+  <h2>제품소개 - AI 스마트팜</h2>
+  <p>AI가 자동으로 온도, 습도, 수분, 영양을 조절하며<br>
+  작물의 성장을 예측합니다.</p>
+
+  <p>음식물 쓰레기를 비료로 변환하는 장치 포함<br>
+  폐플라스틱 외장 & 태양광 패널로 친환경 실현</p>
+
+  <p>50종 작물 재배 가능, 크기/색상 맞춤 지원</p>
+
+  <img src="ppt_capture.png" alt="제품 소개 이미지" style="max-width:100%; margin-top:20px;">
+</section>
+
+<section id="tech" class="content">
+  <h2>기술/서비스 소개</h2>
+  <p>스마트팜 IoT 센서 / 음식물처리 비료화 시스템 / 태양광 연계 전력 관리</p>
+  <p>앱 기반 원격 제어 및 작물 성장 데이터 시각화</p>
+</section>
+
+<section id="recruit" class="content">
+  <h2>채용안내</h2>
+  <p>현재 AI 스마트팜 기술 개발 및 마케팅 인재를 채용 중입니다.</p>
+  <p>📩 지원: recruit@aespam.kr</p>
+</section>
+
+<section id="contact" class="content">
+  <h2>고객문의</h2>
+  <p>문의: help@aespam.kr</p>
+  <p>전화: 070-1234-5678</p>
+  <p>상담 시간: 평일 오전 9시 ~ 오후 6시</p>
+</section>
+
+<section id="location" class="content">
+  <h2>오시는 길</h2>
+  <p>대전광역시 유성구 대덕대로556번길 158 (대덕고등학교 인근)</p>
+  <p>📍 지하철 1호선 유성온천역 도보 10분</p>
+</section>
+
+<footer>
+  ⓒ 2025 에스팜(aespam). All rights reserved.
+</footer>
+
+<script>
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  let currentSection = 'home';
+
+  function menuClick(event, id) {
+    if (id === currentSection) return;
+    
+    // show loading
+    loadingOverlay.classList.add('visible');
+
+    // delay to show loading effect
+    setTimeout(() => {
+      // hide all sections
+      document.querySelectorAll('.content').forEach(sec => {
+        sec.classList.remove('active');
+      });
+      // show selected section
+      document.getElementById(id).classList.add('active');
+
+      // set active button style
+      document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      currentSection = id;
+
+      // hide loading overlay
+      loadingOverlay.classList.remove('visible');
+    }, 600); // 0.6초 로딩 시간
+  }
+</script>
+
+</body>
+</html>
